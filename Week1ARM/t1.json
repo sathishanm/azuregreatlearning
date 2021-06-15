@@ -1,0 +1,73 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_sathi01weekvm1_name": {
+            "defaultValue": "sathi01weekvm1",
+            "type": "String"
+        },
+        "disks_sathi01weekvm1_OsDisk_1_48eac7b04e3840dcbd2fdce0a36411b4_externalid": {
+            "defaultValue": "/subscriptions/f700a502-f4c5-42f4-8f1d-cacab88d7d39/resourceGroups/Regroup_7bwx/providers/Microsoft.Compute/disks/sathi01weekvm1_OsDisk_1_48eac7b04e3840dcbd2fdce0a36411b4",
+            "type": "String"
+        },
+        "networkInterfaces_sathi01weekvm1_externalid": {
+            "defaultValue": "/subscriptions/f700a502-f4c5-42f4-8f1d-cacab88d7d39/resourceGroups/Regroup_7bwx/providers/Microsoft.Network/networkInterfaces/sathi01weekvm1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-12-01",
+            "name": "[parameters('virtualMachines_sathi01weekvm1_name')]",
+            "location": "southindia",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('virtualMachines_sathi01weekvm1_name'), '_OsDisk_1_48eac7b04e3840dcbd2fdce0a36411b4')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('disks_sathi01weekvm1_OsDisk_1_48eac7b04e3840dcbd2fdce0a36411b4_externalid')]"
+                        },
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_sathi01weekvm1_name')]",
+                    "adminUsername": "sathishanm",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "patchSettings": {
+                            "patchMode": "AutomaticByOS"
+                        }
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_sathi01weekvm1_externalid')]"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
