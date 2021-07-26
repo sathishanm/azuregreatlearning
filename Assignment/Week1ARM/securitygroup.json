@@ -1,0 +1,167 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+   "securityGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the network security group"
+      }
+    }
+  },
+  "variables": {
+    "location": "[resourceGroup().location]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-05-01-preview",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('securityGroupName')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow_http",
+            "properties": {
+              "description": "Permit access to HTTP",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 105,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_https",
+            "properties": {
+              "description": "Permit access to HTTPS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 110,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_h323cs",
+            "properties": {
+              "description": "Permit access to H.323 CS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "1720",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 115,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_sip_tcp",
+            "properties": {
+              "description": "Permit access to SIP/TCP",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5060",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 120,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_sip_tls",
+            "properties": {
+              "description": "Permit access to SIP/TLS",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "5061",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 125,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_signalling_tcp",
+            "properties": {
+              "description": "Permit access to ephemeral TCP call signalling ports",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "33000-39999",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 130,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_media_tcp",
+            "properties": {
+              "description": "Permit access to ephemeral TCP media ports",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "40000-49999",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 135,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_h323ls",
+            "properties": {
+              "description": "Permit access to H.323 LS",
+              "protocol": "Udp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "1719",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 140,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_signalling_udp",
+            "properties": {
+              "description": "Permit access to ephemeral UDP call signalling ports",
+              "protocol": "Udp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "33000-39999",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 150,
+              "direction": "Inbound"
+            }
+          },
+          {
+            "name": "allow_media_udp",
+            "properties": {
+              "description": "Permit access to ephemeral UDP media ports",
+              "protocol": "Udp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "40000-49999",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 155,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
